@@ -1,12 +1,15 @@
 package dev.plesa.data.remote.model
 
 import com.squareup.moshi.Json
+import dev.plesa.data.common.DomainMapper
+import dev.plesa.domain.model.GitHubRepository
+import java.util.*
 
 data class GitHubRepositoryDTO(
     @Json(name = "name")
     val name: String,
     @Json(name = "owner")
-    val user: GitHubOwnerDTO,
+    val owner: GitHubOwnerDTO,
     @Json(name = "watchers_count")
     val watchersCount: Int,
     @Json(name = "forks_count")
@@ -21,4 +24,10 @@ data class GitHubRepositoryDTO(
     val updatedAt: String,
     @Json(name = "html_url")
     val htmlUrl: String
-)
+) : DomainMapper<GitHubRepository> {
+
+    override fun mapToDomain(): GitHubRepository {
+        return GitHubRepository(name, owner.mapToDomain(), "", 0, 0, 0, "", Date(), Date(), "", "")
+    }
+
+}

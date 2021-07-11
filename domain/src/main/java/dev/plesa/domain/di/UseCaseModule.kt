@@ -6,7 +6,7 @@ import org.koin.dsl.module
 
 val useCaseModule = module {
 
-    factory { GetRepositoriesUseCase() }
+    factory { GetRepositoriesUseCase(get()) }
     factory { GetUserUseCase() }
 
 }

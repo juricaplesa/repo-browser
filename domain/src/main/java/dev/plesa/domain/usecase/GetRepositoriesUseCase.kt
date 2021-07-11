@@ -1,4 +1,12 @@
 package dev.plesa.domain.usecase
 
-class GetRepositoriesUseCase {
+import dev.plesa.domain.Repository
+import dev.plesa.domain.model.RepositoriesSortOption
+
+class GetRepositoriesUseCase(
+    private val repository: Repository
+) {
+
+    suspend fun getRepositories(query: String, sort: RepositoriesSortOption) = repository.getGitHubRepositories(query)
+
 }

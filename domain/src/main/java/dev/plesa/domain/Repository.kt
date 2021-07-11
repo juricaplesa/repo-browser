@@ -1,11 +1,15 @@
 package dev.plesa.domain
 
+import dev.plesa.domain.model.GitHubUser
 import dev.plesa.domain.model.GitHubRepository
+import dev.plesa.domain.model.RepositoriesSortOption
 
 interface Repository {
 
-    suspend fun getGitHubRepositories(query: String): Result<List<GitHubRepository>>
+    suspend fun getRepositories(query: String, sort: RepositoriesSortOption): Result<List<GitHubRepository>>
 
-    fun getGitHubUser()
+    suspend fun getNextRepositories(): Result<List<GitHubRepository>>
+
+    suspend fun getUser(url: String): Result<GitHubUser>
 
 }

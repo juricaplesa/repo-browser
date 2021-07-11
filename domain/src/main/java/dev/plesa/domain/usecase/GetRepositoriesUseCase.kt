@@ -7,6 +7,8 @@ class GetRepositoriesUseCase(
     private val repository: Repository
 ) {
 
-    suspend fun getRepositories(query: String, sort: RepositoriesSortOption) = repository.getGitHubRepositories(query)
+    suspend fun getRepositories(query: String, sort: RepositoriesSortOption) = repository.getRepositories(query, sort)
+
+    suspend fun getNextRepositories() = repository.getNextRepositories()
 
 }

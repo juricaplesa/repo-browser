@@ -2,9 +2,10 @@ package dev.plesa.data.remote.model
 
 import com.squareup.moshi.Json
 import dev.plesa.data.common.DomainMapper
-import dev.plesa.domain.model.GitHubOwner
+import dev.plesa.domain.model.GitHubUser
 
-open class GitHubOwnerDTO : DomainMapper<GitHubOwner> {
+open class GitHubOwnerDTO : DomainMapper<GitHubUser> {
+
     @Json(name = "login")
     var name: String = ""
     @Json(name = "avatar_url")
@@ -14,9 +15,15 @@ open class GitHubOwnerDTO : DomainMapper<GitHubOwner> {
     @Json(name = "html_url")
     var htmlUrl: String = ""
 
-
-    override fun mapToDomain(): GitHubOwner {
-        return GitHubOwner(name)
-    }
+    override fun mapToDomain() = GitHubUser(
+        name,
+        avatarUrl,
+        userUrl,
+        htmlUrl,
+        "",
+        "",
+        "",
+        ""
+    )
 
 }

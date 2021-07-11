@@ -9,6 +9,7 @@ import dev.plesa.domain.onSuccess
 import dev.plesa.domain.usecase.GetRepositoriesUseCase
 import dev.plesa.repobrowser.common.base.BaseViewModel
 import dev.plesa.repobrowser.model.GitHubRepositoryUI
+import dev.plesa.repobrowser.model.mapToUI
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,7 @@ class RepositoryListViewModel(
         lastGetRepositoriesJob?.cancel()
         lastGetRepositoriesJob = viewModelScope.launch {
             getRepositoriesUseCase.getRepositories(query, RepositoriesSortOption.DEFAULT)
-                .onSuccess {  }
+                .onSuccess { _repositories.value = it.map {  item -> item.mapToUI() } }
                 .onError {  }
         }
     }

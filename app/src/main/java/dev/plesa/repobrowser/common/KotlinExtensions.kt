@@ -3,6 +3,8 @@ package dev.plesa.repobrowser.common
 import androidx.appcompat.widget.SearchView
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun SearchView.getQueryTextChangeStateFlow(): StateFlow<String> {
 
@@ -19,4 +21,14 @@ fun SearchView.getQueryTextChangeStateFlow(): StateFlow<String> {
         }
     })
     return query
+}
+
+fun Date.domainDateToUI(): String {
+    val outputPattern = "dd.MM.yyyy, HH:mm"
+    return try {
+        val outputFormat = SimpleDateFormat(outputPattern, Locale.getDefault())
+        outputFormat.format(this)
+    } catch (exception: Exception) {
+        ""
+    }
 }

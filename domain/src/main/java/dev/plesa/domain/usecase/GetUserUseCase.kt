@@ -1,4 +1,11 @@
 package dev.plesa.domain.usecase
 
-class GetUserUseCase {
+import dev.plesa.domain.Repository
+
+class GetUserUseCase(
+    private val repository: Repository
+) {
+
+    suspend fun getUser(url: String) = repository.getUser(url)
+
 }

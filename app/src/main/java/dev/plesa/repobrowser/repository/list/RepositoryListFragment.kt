@@ -2,6 +2,7 @@ package dev.plesa.repobrowser.repository.list
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.plesa.repobrowser.R
@@ -13,10 +14,7 @@ import dev.plesa.repobrowser.repository.list.adapter.RepositoryListAdapter
 import kotlinx.android.synthetic.main.fragment_repository_list.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -41,6 +39,10 @@ class RepositoryListFragment :
         setupRecyclerView()
         setupSearchView()
         setupRadioGroup()
+
+        viewModel.repositories.observe(viewLifecycleOwner, Observer { data ->
+            adapter.setData(data)
+        })
     }
 
     private fun setupRecyclerView() {
@@ -55,6 +57,7 @@ class RepositoryListFragment :
 
         viewLifecycleOwner.lifecycleScope.launch {
             searchView.getQueryTextChangeStateFlow()
+                .drop(1)
                 .debounce(800)
                 .distinctUntilChanged()
                 .flowOn(Dispatchers.Default)

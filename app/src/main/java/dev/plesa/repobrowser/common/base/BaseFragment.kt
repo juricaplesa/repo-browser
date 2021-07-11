@@ -27,12 +27,16 @@ abstract class BaseFragment<viewModelClass : BaseViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { stringResourceId ->
-            showToastMessage(stringResourceId)
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { stringResourceId ->
+                showToastMessage(stringResourceId)
+            }
         })
 
-        viewModel.openExternalUrl.observe(viewLifecycleOwner, Observer {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it)))
+        viewModel.openExternalUrl.observe(viewLifecycleOwner, Observer { event ->
+            event.getContentIfNotHandled()?.let { externalUrl ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(externalUrl)))
+            }
         })
     }
 

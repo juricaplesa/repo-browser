@@ -38,32 +38,43 @@
 
     <TextView
         android:id="@+id/txtWatchers"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
         android:drawablePadding="@dimen/padding_drawable"
+        android:ellipsize="end"
+        android:lines="1"
         app:drawableStartCompat="@drawable/ic_watchers"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/txtForks"
+        app:layout_constraintHorizontal_weight="0.375"
         app:layout_constraintStart_toEndOf="@id/imgOwner" />
 
     <TextView
         android:id="@+id/txtForks"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/padding_drawable"
+        android:ellipsize="end"
+        android:lines="1"
         app:drawableStartCompat="@drawable/ic_forks"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/txtIssues"
+        app:layout_constraintHorizontal_weight="0.375"
         app:layout_constraintStart_toEndOf="@id/txtWatchers" />
 
     <TextView
         android:id="@+id/txtIssues"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_medium"
         android:drawablePadding="@dimen/padding_drawable"
+        android:ellipsize="end"
+        android:lines="1"
         app:drawableStartCompat="@drawable/ic_issues"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="0.25"
         app:layout_constraintStart_toEndOf="@id/txtForks" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

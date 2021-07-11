@@ -2,6 +2,7 @@ package dev.plesa.repobrowser.common
 
 open class Event<out T>(private val content: T) {
 
+    @Suppress("MemberVisibilityCanBePrivate")
     var hasBeenHandled = false
         private set
 
@@ -13,6 +14,4 @@ open class Event<out T>(private val content: T) {
             content
         }
     }
-
-    fun peekContent(): T = content
 }

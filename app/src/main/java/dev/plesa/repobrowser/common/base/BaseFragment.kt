@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 
 abstract class BaseFragment<viewModelClass : BaseViewModel>(
     private val layoutResource: Int
@@ -29,20 +28,20 @@ abstract class BaseFragment<viewModelClass : BaseViewModel>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { event ->
+        viewModel.errorMessage.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandled()?.let { stringResourceId ->
                 showToastMessage(stringResourceId)
             }
         })
 
-        viewModel.openExternalUrl.observe(viewLifecycleOwner, Observer { event ->
+        viewModel.openExternalUrl.observe(viewLifecycleOwner, { event ->
             event.getContentIfNotHandled()?.let { externalUrl ->
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(externalUrl)))
             }
         })
     }
 
-    protected fun showToastMessage(stringResourceId: Int) {
+    private fun showToastMessage(stringResourceId: Int) {
         activity?.let {
             Toast.makeText(it, getString(stringResourceId), Toast.LENGTH_SHORT).show()
         }

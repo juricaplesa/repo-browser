@@ -7,7 +7,7 @@ import dev.plesa.repobrowser.R
 import dev.plesa.repobrowser.model.GitHubRepositoryUI
 
 class RepositoryListAdapter(
-    var itemClickListener: RepositoryItemClickListener
+    private var itemClickListener: RepositoryItemClickListener
 ) : RecyclerView.Adapter<RepositoryListViewHolder>() {
 
     private var repositories: ArrayList<GitHubRepositoryUI> = ArrayList()

@@ -1,6 +1,7 @@
 package dev.plesa.repobrowser.repository
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import dev.plesa.repobrowser.R
 import dev.plesa.repobrowser.common.base.BaseActivity
@@ -20,4 +21,13 @@ class RepositoryActivity : BaseActivity() {
         addFragment(fragmentContainer.id, fragment)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 }

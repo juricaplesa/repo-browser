@@ -20,7 +20,11 @@ class RepositoryListAdapter(
 
     fun addData(data: List<GitHubRepositoryUI>) {
         repositories.addAll(data)
-        notifyItemRangeChanged(repositories.size - data.size, repositories.size)
+        if ((repositories.size - data.size) > 0) {
+            notifyItemRangeChanged(repositories.size - data.size - 1, repositories.size)
+        } else {
+            notifyDataSetChanged()
+        }
     }
 
     fun clear() {
@@ -29,7 +33,8 @@ class RepositoryListAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepositoryListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_repository, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_repository, parent, false)
         return RepositoryListViewHolder(view, itemClickListener)
     }
 

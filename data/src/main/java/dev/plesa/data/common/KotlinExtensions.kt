@@ -22,7 +22,7 @@ fun Headers.getLinks(): Map<String, String> {
 }
 
 fun String.remoteDateToDomain(): Date? {
-    val inputPattern = "yyyy-MM-dd'T'HH:mm:ssZ"
+    val inputPattern = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     return try {
         val inputFormat = SimpleDateFormat(inputPattern, Locale.getDefault())
         inputFormat.parse(this)

@@ -23,6 +23,7 @@
         android:id="@+id/radioGroupSort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/gray_500"
         android:orientation="horizontal"
         android:paddingStart="@dimen/padding_containers"
         android:paddingEnd="@dimen/padding_containers"

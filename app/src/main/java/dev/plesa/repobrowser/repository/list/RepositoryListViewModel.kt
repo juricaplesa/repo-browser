@@ -10,6 +10,7 @@ import dev.plesa.domain.model.RepositoriesSortOption
 import dev.plesa.domain.onError
 import dev.plesa.domain.onSuccess
 import dev.plesa.domain.usecase.GetRepositoriesUseCase
+import dev.plesa.repobrowser.BuildConfig
 import dev.plesa.repobrowser.R
 import dev.plesa.repobrowser.common.Event
 import dev.plesa.repobrowser.common.base.BaseViewModel
@@ -99,11 +100,19 @@ class RepositoryListViewModel(
     }
 
     fun onItemClicked(repository: GitHubRepositoryUI) {
-        _showDetails.value = Event(repository)
+        if (BuildConfig.PREMIUM) {
+            _showDetails.value = Event(repository)
+        } else {
+            _errorMessage.value = Event(R.string.error_premium_only)
+        }
     }
 
     fun onImageClicked(repository: GitHubRepositoryUI) {
-        _openExternalUrl.value = Event(repository.user.htmlUrl)
+        if (BuildConfig.PREMIUM) {
+            _openExternalUrl.value = Event(repository.user.htmlUrl)
+        } else {
+            _errorMessage.value = Event(R.string.error_premium_only)
+        }
     }
 
 }

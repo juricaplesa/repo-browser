@@ -29,5 +29,6 @@
     <string name="error_general">Something went wrong</string>
     <string name="error_maximum_requests">You had enough requests for this minute</string>
     <string name="error_incomplete">Something broke and this is all we have</string>
+    <string name="error_premium_only">Premium feature only</string>
 
 </resources>

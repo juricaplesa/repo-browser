@@ -2,7 +2,9 @@ package dev.plesa.repobrowser.repository.list
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -90,21 +92,23 @@ class RepositoryListFragment :
             }
         })
     }
-
+    
     @FlowPreview
     private fun setupSearchView() {
         searchView.onActionViewExpanded()
         searchView.clearFocus()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            searchView.getQueryTextChangeStateFlow()
-                .drop(1)
-                .debounce(800)
-                .distinctUntilChanged()
-                .flowOn(Dispatchers.Default)
-                .collect { query ->
-                    viewModel.onQueryChanged(query)
-                }
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                searchView.getQueryTextChangeStateFlow()
+                    .drop(1)
+                    .debounce(800)
+                    .distinctUntilChanged()
+                    .flowOn(Dispatchers.Default)
+                    .collect { query ->
+                        viewModel.onQueryChanged(query)
+                    }
+            }
         }
     }
 

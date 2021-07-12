@@ -25,6 +25,7 @@ fun String.remoteDateToDomain(): Date? {
     val inputPattern = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     return try {
         val inputFormat = SimpleDateFormat(inputPattern, Locale.getDefault())
+        inputFormat.timeZone = TimeZone.getTimeZone("UTC")
         inputFormat.parse(this)
     } catch (exception: Exception) {
         null

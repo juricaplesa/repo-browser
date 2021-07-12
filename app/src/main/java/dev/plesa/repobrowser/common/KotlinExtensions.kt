@@ -27,6 +27,7 @@ fun Date.domainDateToUI(): String {
     val outputPattern = "dd.MM.yyyy, HH:mm"
     return try {
         val outputFormat = SimpleDateFormat(outputPattern, Locale.getDefault())
+        outputFormat.timeZone = TimeZone.getDefault()
         outputFormat.format(this)
     } catch (exception: Exception) {
         ""

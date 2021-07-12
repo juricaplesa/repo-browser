@@ -5,24 +5,32 @@ import dev.plesa.data.common.DomainMapper
 import dev.plesa.domain.model.GitHubUser
 
 data class GitHubUserDTO(
+    @Json(name = "login")
+    val name: String,
+    @Json(name = "avatar_url")
+    val avatarUrl: String,
+    @Json(name = "url")
+    val userUrl: String,
+    @Json(name = "html_url")
+    val htmlUrl: String,
     @Json(name = "company")
-    val company: String?,
+    val company: String = "",
     @Json(name = "location")
-    val location: String?,
+    val location: String = "",
     @Json(name = "email")
-    val email: String?,
+    val email: String = "",
     @Json(name = "bio")
-    val bio: String?
-) : GitHubOwnerDTO(), DomainMapper<GitHubUser> {
+    val bio: String = ""
+) : DomainMapper<GitHubUser> {
 
     override fun mapToDomain() = GitHubUser(
         name,
         avatarUrl,
         userUrl,
         htmlUrl,
-        company ?: "",
-        location ?: "",
-        email ?: "",
-        bio ?: ""
+        company,
+        location,
+        email,
+        bio
     )
 }

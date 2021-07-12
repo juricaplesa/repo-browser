@@ -3,6 +3,7 @@ package dev.plesa.data.remote
 import dev.plesa.data.RemoteDataSource
 import dev.plesa.data.common.LINK_NEXT
 import dev.plesa.data.common.getLinks
+import dev.plesa.data.remote.model.GitHubItemsDTO
 import dev.plesa.data.remote.model.GitHubRepositoryDTO
 import dev.plesa.data.remote.model.GitHubUserDTO
 import dev.plesa.data.remote.model.MAXIMUM_REQUESTS
@@ -14,6 +15,7 @@ import dev.plesa.domain.model.RepositoriesSortOption
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import retrofit2.Response
 import java.util.*
 
 class RemoteDataSourceImpl(
@@ -32,23 +34,7 @@ class RemoteDataSourceImpl(
 
                 val response =
                     gitHubApi.getRepositories(query, sort.name.lowercase(Locale.getDefault()))
-                val result = response.body()
-
-                if (response.isSuccessful && result != null) {
-                    if (result.areResultsIncomplete) {
-                        nextRepositoriesUrl = null
-                        Result.Error(IncompleteDataException())
-                    } else {
-                        nextRepositoriesUrl = response.headers().getLinks()[LINK_NEXT]
-                        Result.Success(result.items)
-                    }
-                } else {
-                    if (response.code() == MAXIMUM_REQUESTS) {
-                        Result.Error(MaximumRequestsException())
-                    } else {
-                        Result.Error(HttpException(response))
-                    }
-                }
+                handleRepositoriesResponse(response)
 
             } catch (e: Exception) {
                 Result.Error(e)
@@ -62,28 +48,32 @@ class RemoteDataSourceImpl(
                     ?: return@withContext Result.Error(NextRepositoriesNotFoundException())
 
                 val response = gitHubApi.getNextRepositories(url)
-                val result = response.body()
-
-                if (response.isSuccessful && result != null) {
-                    if (result.areResultsIncomplete) {
-                        nextRepositoriesUrl = null
-                        Result.Error(IncompleteDataException())
-                    } else {
-                        nextRepositoriesUrl = response.headers().getLinks()[LINK_NEXT]
-                        Result.Success(result.items)
-                    }
-                } else {
-                    if (response.code() == MAXIMUM_REQUESTS) {
-                        Result.Error(MaximumRequestsException())
-                    } else {
-                        Result.Error(HttpException(response))
-                    }
-                }
+                handleRepositoriesResponse(response)
 
             } catch (e: Exception) {
                 Result.Error(e)
             }
         }
+
+    private fun handleRepositoriesResponse(response: Response<GitHubItemsDTO<GitHubRepositoryDTO>>): Result<List<GitHubRepositoryDTO>> {
+        val result = response.body()
+
+        return if (response.isSuccessful && result != null) {
+            if (result.areResultsIncomplete) {
+                nextRepositoriesUrl = null
+                Result.Error(IncompleteDataException())
+            } else {
+                nextRepositoriesUrl = response.headers().getLinks()[LINK_NEXT]
+                Result.Success(result.items)
+            }
+        } else {
+            if (response.code() == MAXIMUM_REQUESTS) {
+                Result.Error(MaximumRequestsException())
+            } else {
+                Result.Error(HttpException(response))
+            }
+        }
+    }
 
     override suspend fun getUser(url: String): Result<GitHubUserDTO> =
         withContext(Dispatchers.IO) {

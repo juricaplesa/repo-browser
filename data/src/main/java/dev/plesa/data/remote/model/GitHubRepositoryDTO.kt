@@ -9,7 +9,7 @@ data class GitHubRepositoryDTO(
     @Json(name = "name")
     val name: String,
     @Json(name = "owner")
-    val owner: GitHubOwnerDTO,
+    val owner: GitHubUserDTO,
     @Json(name = "watchers_count")
     val watchersCount: Int,
     @Json(name = "forks_count")

@@ -15,35 +15,32 @@
 
     <TextView
         android:id="@+id/txtRepository"
+        style="@style/ItemLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
-        android:ellipsize="end"
-        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgOwner"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtOwner"
+        style="@style/ItemLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginTop="@dimen/margin_medium"
-        android:ellipsize="end"
-        android:lines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imgOwner"
         app:layout_constraintTop_toBottomOf="@id/txtRepository" />
 
     <TextView
         android:id="@+id/txtWatchers"
+        style="@style/ItemLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:drawablePadding="@dimen/padding_drawable"
-        android:ellipsize="end"
-        android:lines="1"
         app:drawableStartCompat="@drawable/ic_watchers"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/txtForks"
@@ -52,11 +49,10 @@
 
     <TextView
         android:id="@+id/txtForks"
+        style="@style/ItemLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:drawablePadding="@dimen/padding_drawable"
-        android:ellipsize="end"
-        android:lines="1"
         app:drawableStartCompat="@drawable/ic_forks"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/txtIssues"
@@ -65,12 +61,11 @@
 
     <TextView
         android:id="@+id/txtIssues"
+        style="@style/ItemLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_medium"
         android:drawablePadding="@dimen/padding_drawable"
-        android:ellipsize="end"
-        android:lines="1"
         app:drawableStartCompat="@drawable/ic_issues"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
